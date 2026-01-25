@@ -1,0 +1,1 @@
+export const WP_BASE_URL = process.env.NEXT_PUBLIC_WP_BASE_URL!;
