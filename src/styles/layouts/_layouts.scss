@@ -1,0 +1,96 @@
+@use "../globals" as *;
+
+/* Global wrapper */
+.wrapper {
+  position: relative;
+  display: flex; 
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  &--no-scrollbar {
+    height: 100vh;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+
+  .header,
+  .footer {
+    flex-shrink: 0;
+  }
+
+  main {
+    flex-grow: 1;
+  }
+}
+
+
+/* Section */
+.section {
+  padding: 5rem 0;
+
+  &--accent {
+    background-color: var(--color-default);
+  }
+
+  &--full {
+    flex: 1;
+    padding: 5rem 0;
+  }
+
+  @include laptop {
+    padding: 4rem 0;
+  }
+
+  @include tablets {
+    padding: 2.5rem 0;
+
+    &--full {
+      padding: 2.5rem 0;
+    }
+  }
+}
+
+
+/* Container */
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 40px;
+
+  @include hd {
+    max-width: 1140px;
+    padding: 0 20px;
+  }
+
+  @include desktop {
+    max-width: 960px;
+    padding: 0 15px;
+  }
+
+  @include laptop {
+    max-width: 720px;
+    padding: 0 10px;
+  }
+
+  @include tablets {
+    max-width: 540px;
+  }
+
+  @include phones {
+    max-width: 100%;
+  }
+}
+
+.container-mobile {
+  @include phones {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+}

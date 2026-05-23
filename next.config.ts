@@ -4,10 +4,6 @@ import path from "path";
 const nextConfig = {
   sassOptions: {
     includePaths: [path.join(process.cwd(), "src/styles")],
-    prependData: `
-@use "variables" as *;
-@use "mixins" as *;
-`,
   },
 };
 

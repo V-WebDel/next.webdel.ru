@@ -1,0 +1,10 @@
+@use "../mixins/font-face" as *;
+
+@include font-face("Roboto", "../../fonts/Roboto-Light", 300);
+@include font-face("Roboto", "../../fonts/Roboto-Regular", 400);
+@include font-face("Roboto", "../../fonts/Roboto-Italic", 400, italic);
+@include font-face("Roboto", "../../fonts/Roboto-Medium", 500);
+@include font-face("Roboto", "../../fonts/Roboto-Bold", 700);
+
+@include font-face("Rotonda", "../../fonts/Rotonda-Bold", 700);
+@include font-face("Rotonda", "../../fonts/Rotonda-Regular", 400);

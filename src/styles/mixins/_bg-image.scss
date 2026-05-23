@@ -1,0 +1,4 @@
+@mixin bg-image($name, $extension) {
+  background-image: -webkit-image-set( url('../img/' + $name + '.' + $extension) 1x, url('../img/webp/' + $name + '.webp') 1x);
+  background-image: image-set( url('../img/' + $name + '.' + $extension) 1x, url('../img/webp/' + $name + '.webp') 1x);
+}

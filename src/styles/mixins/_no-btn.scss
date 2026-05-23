@@ -1,0 +1,10 @@
+// mixins "не кнопка"
+@mixin no-btn {
+  padding: 0;
+  background: none;
+  border: none;
+
+  &:active, &:focus {
+    outline: none;
+  }
+}

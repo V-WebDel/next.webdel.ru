@@ -1,0 +1,161 @@
+@use "../../styles/globals" as *;
+
+.examples {
+  text-align: center;
+  
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem;
+    @include lst;
+    margin-top: 3rem;
+  }
+
+  &__item {
+    width: 33%;
+    height: auto;
+    overflow: hidden;
+  }
+
+  @include laptop {
+
+    &__list {
+      margin-top: 2.5rem;
+    }
+
+    &__item {
+      width: calc(50% - 0.25rem);
+    }
+  }
+
+  @include phones {
+    &__list {
+      margin-top: 2rem;
+    }
+
+    &__item {
+      width: 19rem;
+      margin: 0 auto;
+    }
+  }
+}
+
+.example {
+
+  &__link, &__btn {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    font: var(--font-big-bold);
+    text-decoration: none;
+    background: none;
+    border: none;
+    transition: none;
+    cursor: pointer;
+
+    &:hover {
+      .example {
+        &__image {
+          transform: scale(1.2);
+
+          &::before {
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9)
+          }
+        }
+        &__name {
+          opacity: 1
+        }
+      }
+    }
+  }
+
+  &__image {
+    position: relative;
+    display: block;
+    padding-top: 150%;
+    background-color: var(--color-white);
+    transition: transform 0.4s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+      width: 100%;
+      height: 0;
+      background-color: rgba(0, 0, 0, 0.75);
+      transform: translate(-50%, -50%);
+      transition: height $slowdown, background-color $slowdown;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-height: 100%;
+      object-position: 50% 50%;
+      object-fit: cover;
+    }
+  }
+
+  &__name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    padding: 1.25rem;
+    font: var(--font-heading-3);
+    color: var(--color-default);
+    letter-spacing: 1px;
+    text-align: center;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity $slowdown;
+  }
+
+  @include laptop {
+    margin-bottom: 1rem;
+
+    &:hover {
+      .example {
+        &__image {
+          transform: scale(1);
+
+          &::before {
+            background-color: rgba(255, 255, 255, 0.9)
+          }
+        }
+        &__name {
+          opacity: 1
+        }
+      }
+    }
+
+    &__image {
+      &::before {
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0)
+      }
+    }
+
+    &__name {
+      position: static;
+      padding: 0.75rem 1rem;
+      color: var(--color-white);
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+  @include phones {
+    margin-bottom: 1.5rem;
+  }
+}

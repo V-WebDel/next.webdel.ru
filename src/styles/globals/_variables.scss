@@ -1,0 +1,160 @@
+@use "sass:color";
+
+// Default colors
+$black:             #000000;
+$white:             #ffffff;
+$color-transparent: rgba(255, 255, 255, 0);
+
+
+// Base
+$accent:    #4dd6fc;
+$default:   #005792;
+$light:     #6eacd4;
+
+$grey:      #cccccc;
+$grey-light:#f4f4f4;
+
+
+// Typography
+$font-accent:   "Rotonda", Arial, Helvetica, sans-serif;
+$font-default:  "Roboto", Arial, Helvetica, sans-serif;
+
+
+// Other
+$fastdown:      0.2s ease;
+$middledown:    0.3s ease;
+$slowdown:      0.4s ease;
+
+
+// Shadows
+$shadow-nano: 0 4px 8px rgba($black, 0.1);
+$shadow-small: 0 8px 16px rgba($black, 0.2);
+
+
+:root {
+
+  // Color
+  --color-white:        #FFFFFF;
+  --color-black:        #000000;
+
+  --color-default:      #005792;
+  --color-accent:       #4dd6fc;
+  --color-blue:         #6eacd4;
+
+  --color-default-hover:#0168ac;
+  --color-accent-hover: #23aacf;
+
+  --color-grey:         #cccccc;
+  --color-grey-light:   #f4f4f4;
+
+  --white-dark-20: #{color.adjust($white, $lightness: -20%)};
+  --white-light-20: #{color.adjust($white, $lightness: -20%)};
+
+  // Radius
+  --radius-none:        0; 
+  --radius-nano:        0.25rem; 
+  --radius-small:       0.5rem;
+  --radius:             1rem;
+  --radius-medium:      1.5rem;
+  --radius-big:         2rem;
+  --radius-mega:        3rem;
+  --radius-btn:         6rem;
+  --radius-full:        50%;
+
+  // Shadows
+  --box-shadow-nano:    0 4px 8px rgba(0, 0, 0, 0.2);     
+  --box-shadow:         0 8px 16px rgba(0, 0, 0, 0.4);     
+
+  // Typography
+  --font-default: "Roboto", Arial, Helvetica, sans-serif;
+  --font-accent: "Rotonda", Arial, Helvetica, sans-serif;
+
+  --font-heading-mega: 700 4.5rem/1.2 var(--font-accent);
+  --font-heading-1: 700 2.25rem/1.2 var(--font-accent);
+  --font-heading-2: 700 2rem/1.2 var(--font-accent);
+  --font-heading-3: 700 1.5rem/1.2 var(--font-accent);
+  --font-heading-4: 700 1rem/1.2 var(--font-accent);
+
+  --font-menu-text: 300 0.75rem/1.2 var(--font-accent);
+
+  --font-name: 700 2rem/1.2 var(--font-accent);
+  
+  --font-title: 400 1.75rem/1.2 var(--font-default);
+  --font-title-bold: 700 1.75rem/1.2 var(--font-default);
+
+  --font-mega: 400 1.5rem/1.4 var(--font-default);
+  --font-mega-bold: 700 1.5rem/1.4 var(--font-default);
+
+  --font-big: 400 1.25rem/1.4 var(--font-default);
+  --font-big-italic: italic 400 1.25rem/1.4 var(--font-default);
+  --font-big-light: 300 1.25rem/1.4 var(--font-default);
+  --font-big-bold: 700 1.25rem/1.4 var(--font-default);
+
+  --font-accent-big: 400 1.25rem/1.2 var(--font-accent);
+  --font-accent-big-bold: 700 1.25rem/1.2 var(--font-accent);
+  
+  --font-medium: 400 18px/1.4 var(--font-default);
+  --font-medium-italic: italic 300 18px/1.4 var(--font-default);
+  --font-medium-light: 300 18px/1.4 var(--font-default);
+  --font-medium-medium: 500 18px/1.4 var(--font-default);
+  --font-medium-bold: 700 18px/1.4 var(--font-default);
+  
+  --font-accent-medium: 400 18px/1.2 var(--font-accent);
+  --font-accent-medium-bold: 700 18px/1.2 var(--font-accent);
+
+  --font-small: 400 14px/1.4 var(--font-default);
+  --font-small-light: 300 14px/1.4 var(--font-default);
+  --font-small-bold: 700 14px/1.4 var(--font-default);
+  
+  --font-nano: 400 12px/1.4 var(--font-default);
+  --font-nano-light: 300 12px/1.4 var(--font-default);
+  --font-nano-bold: 700 12px/1.4 var(--font-default);
+
+
+  @media screen and (max-width: 75rem) {
+    --font-heading-mega: 700 3.5rem/1.2 var(--font-accent);
+  }
+
+  @media screen and (max-width: 50rem) {
+    // Radius
+    --radius-big:         1rem;
+
+    // Typography
+    --font-heading-mega: 700 2.5rem/1.2 var(--font-accent);
+    --font-heading-1: 700 1.75rem/1.2 var(--font-accent);
+    --font-heading-2: 700 1.5rem/1.2 var(--font-accent);
+    --font-heading-3: 700 1.25rem/1.2 var(--font-accent);
+    --font-heading-4: 700 1rem/1.2 var(--font-accent);
+
+    --font-menu-text: 300 1rem/1.2 var(--font-accent);
+
+    --font-name: 700 1.5rem/1.2 var(--font-accent);
+
+    --font-title: 400 1.25rem/1.2 var(--font-default);
+    --font-title-bold: 700 1.25rem/1.2 var(--font-default);
+
+    --font-mega: 400 1.5rem/1.4 var(--font-default);
+    --font-mega-bold: 700 1.5rem/1.4 var(--font-default);
+
+    --font-big: 400 18px/1.2 var(--font-default);
+    --font-big-bold: 700 18px/1.2 var(--font-default);
+
+    --font-accent-big: 400 18px/1.2 var(--font-accent);
+    --font-accent-big-bold: 700 18px/1.2 var(--font-accent);
+    
+    --font-medium: 400 16px/1.2 var(--font-default);
+    --font-medium-bold: 700 16px/1.2 var(--font-default);
+    
+    --font-accent-medium: 400 16px/1.2 var(--font-accent);
+    --font-accent-medium-bold: 700 16px/1.2 var(--font-accent);
+
+    --font-small: 400 12px/1.2 var(--font-default);
+    --font-small-bold: 700 12px/1.2 var(--font-default);
+  }
+
+  @media screen and (max-width: 37.5rem) {
+    --font-title: 400 1rem/1.2 var(--font-default);
+    --font-title-bold: 700 1rem/1.2 var(--font-default);
+  }
+}
+

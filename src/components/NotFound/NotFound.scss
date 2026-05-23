@@ -1,0 +1,40 @@
+@use "../../styles/globals" as *;
+
+.error {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--color-default);
+  color: var(--color-white);
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  &__title {
+    margin-bottom: 1.5rem;
+    font: var(--font-heading-mega);
+  }
+
+  &__text {
+    margin-bottom: 0;
+    font: var(--font-heading-3);
+  }
+
+  @include tablets {
+    &__title {
+      margin-bottom: 1rem;
+    }
+  }
+  
+  @include phones {
+    &__title {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

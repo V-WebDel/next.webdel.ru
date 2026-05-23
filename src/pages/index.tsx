@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/Layout/Layout";
 import { wpFetch } from "@/lib/wp/api";
 import type { WPPage } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";

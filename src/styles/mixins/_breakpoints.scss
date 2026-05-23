@@ -1,0 +1,46 @@
+// Viewports
+@mixin hd {
+  @media screen and (max-width: 120rem) {
+      @content;
+  }
+}
+
+@mixin desktop-plus {
+  @media screen and (max-width: 90rem) {
+      @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (max-width: 75rem) {
+      @content;
+  }
+}
+
+@mixin laptop {
+  @media screen and (max-width: 62.5rem) {
+      @content;
+  }
+}
+
+@mixin tablets {
+  @media screen and (max-width: 50rem) {
+      @content;
+  }
+}
+
+@mixin phones {
+  @media screen and (max-width: 37.5rem) {
+      @content;
+  }
+}
+
+// Retina
+
+@mixin retina {
+  @media
+    only screen and (                min-resolution: 144dpi),
+    only screen and (                min-resolution: 1.5dppx) {
+      @content;
+  }
+}
