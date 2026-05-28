@@ -1,26 +1,26 @@
-import Head from "next/head";
 import { ReactNode } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import type { WPHomeAcf } from "@/lib/wp/types";
 
 type Props = {
   children: ReactNode;
-  title?: string;
-  description?: string;
+  footer?: Pick<
+    WPHomeAcf,
+    "logotype" | "copyright_footer" | "messengers_footer"
+  >;
 };
 
-export default function Layout({ children, title, description }: Props) {
+export default function Layout({ children, footer }: Props) {
   return (
-    <>
-      <Head>
-        <title>{title ?? "WebDel"}</title>
-        {description ? <meta name="description" content={description} /> : null}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-
+    <div className="wrapper">
       <Header />
-      <main>{children}</main>
-      <Footer />
-    </>
+      {children}
+      <Footer
+        logotype={footer?.logotype}
+        copyright={footer?.copyright_footer?.text}
+        messengers={footer?.messengers_footer?.items}
+      />
+    </div>
   );
 }

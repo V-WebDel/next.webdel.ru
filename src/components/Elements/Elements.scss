@@ -1,161 +1,216 @@
 @use "../../styles/globals" as *;
 
-.examples {
-  text-align: center;
-  
-  &__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.25rem;
-    @include lst;
-    margin-top: 3rem;
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: 90px;
+
+  &--top {
+    background-color: var(--color-default);
   }
 
-  &__item {
-    width: 33%;
-    height: auto;
-    overflow: hidden;
-  }
+  &--full {
+    min-height: 100vh;
+  }  
 
-  @include laptop {
-
-    &__list {
-      margin-top: 2.5rem;
-    }
-
-    &__item {
-      width: calc(50% - 0.25rem);
-    }
-  }
-
-  @include phones {
-    &__list {
-      margin-top: 2rem;
-    }
-
-    &__item {
-      width: 19rem;
-      margin: 0 auto;
-    }
-  }
-}
-
-.example {
-
-  &__link, &__btn {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    font: var(--font-big-bold);
-    text-decoration: none;
-    background: none;
-    border: none;
-    transition: none;
-    cursor: pointer;
-
-    &:hover {
-      .example {
-        &__image {
-          transform: scale(1.2);
-
-          &::before {
-            height: 100%;
-            background: rgba(255, 255, 255, 0.9)
-          }
-        }
-        &__name {
-          opacity: 1
-        }
-      }
-    }
-  }
-
-  &__image {
-    position: relative;
-    display: block;
-    padding-top: 150%;
-    background-color: var(--color-white);
-    transition: transform 0.4s ease;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      z-index: 1;
-      width: 100%;
-      height: 0;
-      background-color: rgba(0, 0, 0, 0.75);
-      transform: translate(-50%, -50%);
-      transition: height $slowdown, background-color $slowdown;
-    }
-
-    img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-height: 100%;
-      object-position: 50% 50%;
-      object-fit: cover;
-    }
-  }
-
-  &__name {
+  &__circle {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 2;
-    display: block;
-    width: 100%;
-    padding: 1.25rem;
-    font: var(--font-heading-3);
-    color: var(--color-default);
-    letter-spacing: 1px;
-    text-align: center;
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    transition: opacity $slowdown;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.3;
+  
+    &--1 {
+      bottom: 10%;
+      left: -10%;
+      width: 350px;
+      height: 350px;
+    }
+    &--2 {
+      top: 20%;
+      right: -5%;
+      width: 250px;
+      height: 250px;
+    }
+  }
+  
+  &__group {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  
+    &--1 {
+      bottom: 20%;
+      left: 0;
+    }
+    &--2 {
+      top: 20%;
+      right: 0;
+    }
+  }
+  
+  &__elem {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-white);
+    border-radius: 50%;
+    filter: blur(5px);
+    opacity: 0.2;
+    animation-name: rotate;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  
+    &--1 {
+      animation-name: rotate-1;
+      animation-duration: 15s;
+    }
+  
+    &--2 {
+      animation-name: rotate-2;
+      animation-duration: 20s;
+      animation-delay: -10s;
+    }
+  
+    &--3 {
+      width: 70px;
+      height: 70px;
+      animation-name: rotate-3;
+      animation-duration: 30s;
+    }
+  
+    &--4 {
+      background-color: var(--color-accent);
+      animation-name: rotate-2;
+      animation-duration: 25s;
+      animation-delay: -5s;
+    }
+  
+    &--5 {
+      background-color: var(--color-accent);
+      animation-name: rotate-3;
+      animation-duration: 40s;
+      animation-delay: -10s;
+    }
+  
+    &--6 {
+      width: 80px;
+      height: 80px;
+      animation-name: rotate-4;
+      animation-duration: 40s;
+    }
+  }
+  
+  &__elem-z {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-white);
+    border-radius: 50%;
+    filter: blur(5px);
+    opacity: 0.2;
+    animation-name: zoom;
+    animation-duration: 4s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+  
+    &--1 {
+      left: 15%;
+      top: 30%;
+    }
+    &--2 {
+      left: 40%;
+      top: 80%;
+      animation-delay: -2s;
+    }
+    &--3 {
+      right: 15%;
+      top: 60%;
+      animation-delay: -4s;
+    }
+    &--4 {
+      right: 40%;
+      top: 80%;
+    }
+    &--5 {
+      left: 5%;
+      top: 10%;
+      width: 30px;
+      height: 30px;
+      animation-delay: -1s;
+    }
+    &--6 {
+      width: 30px;
+      height: 30px;
+      right: 5%;
+      top: 85%;
+      animation-delay: -2s;
+    }
   }
 
   @include laptop {
-    margin-bottom: 1rem;
-
-    &:hover {
-      .example {
-        &__image {
-          transform: scale(1);
-
-          &::before {
-            background-color: rgba(255, 255, 255, 0.9)
-          }
-        }
-        &__name {
-          opacity: 1
-        }
+    &__circle { 
+      &--1 {
+        bottom: 10%;
+        left: -20%;
+        transform: scale(0.8);
+      }
+      &--2 {
+        top: 20%;
+        right: -10%;
+        transform: scale(0.8);
       }
     }
 
-    &__image {
-      &::before {
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0)
+    &__group {    
+      &--1 {
+        left: -20%;
+      }
+      &--2 {
+        right: -20%;
       }
     }
+  }
 
-    &__name {
-      position: static;
-      padding: 0.75rem 1rem;
-      color: var(--color-white);
-      opacity: 1;
-      transform: translate(0, 0);
+  @include tablets {
+    padding-top: 70px;
+
+    &--full {
+      padding-bottom: 40px;
+    }
+
+    &__circle { 
+      &--1 {
+        bottom: 10%;
+        left: -25%;
+        transform: scale(0.6);
+      }
+      &--2 {
+        top: 20%;
+        right: -20%;
+        transform: scale(0.6);
+      }
     }
   }
 
   @include phones {
-    margin-bottom: 1.5rem;
+    &__circle { 
+      &--1 {
+        left: -50%;
+      }
+
+      &--2 {
+        display: none;
+      }
+    }
+
+    &__group {
+      &--2 {
+        display: none;
+      }
+    }
   }
 }

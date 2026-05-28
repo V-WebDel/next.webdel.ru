@@ -1,0 +1,142 @@
+@use "../../styles/globals" as *;
+
+.footer {
+  color: var(--color-white);
+  background-color: var(--color-default);
+  padding: 2.5rem 0;
+
+  &__wrap {
+    display: grid;
+    grid-template-columns: 50%;
+    grid-template-areas: "logo social" "copyright links";
+    padding: 0 5%;
+  }
+
+  &__area {
+    width: 100%;
+
+    &_logo {
+      grid-area: logo;
+      display: flex;
+      justify-content: flex-start;
+      min-height: 5rem;
+    }
+
+    &_social {
+      grid-area: social;
+    }
+
+    &_copyright {
+      grid-area: copyright;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    &_links {
+      grid-area: links;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+  }
+
+  &__btn {
+    margin-right: auto;
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    padding: 0 10%;
+  }
+
+  &__copyright {
+    font: var(--font-nano);
+  }
+
+  &__link {
+    font: var(--font-nano);
+    color: var(--color-white);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--white-dark-20);
+      text-decoration: none;
+    }
+  }
+
+  @include laptop {
+    &__wrap {
+      padding: 0;
+    }
+  }
+
+  @include tablets {
+    &__wrap {
+      grid-template-columns: 100%;
+      grid-template-areas: "logo" "social" "links" "copyright";
+    }
+
+    &__area {
+      &_logo {
+        min-height: auto;
+        margin-bottom: 1.25rem;
+        text-align: center;
+      }
+
+      &_social {
+        margin-bottom: 1.25rem;
+      }
+
+      &_copyright {
+        justify-content: center;
+      }
+
+      &_links {
+        align-items: center;
+        margin-bottom: 1.25rem;
+      }
+    }
+
+    &__logo {
+      margin: 0 auto;
+    }
+
+    &__copyright {
+      text-align: center;
+    }
+  }
+}
+
+.social {
+  &__list {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    @include lst;
+  }
+
+  &__item {
+    padding: 0.25rem;
+    margin-left: 1.25rem;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  @include tablets {
+    &__list {
+      justify-content: center;
+    }
+    
+    &__item {
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+    }
+  }
+}

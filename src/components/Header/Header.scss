@@ -1,0 +1,71 @@
+@use "../../styles/globals" as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  transform: translateY(0);
+  transition: transform $slowdown, opacity $slowdown;
+
+  &--scroll {
+    background-color: var(--color-default);
+    box-shadow: var(--box-shadow-nano);
+
+    .header__wrap {
+      height: 3rem;
+    }
+
+    .menu__svg {
+      display: none;
+    }
+
+    .logo__name {
+      font-size: 1.5rem;
+    }
+
+    .logo__description {
+      font-size: 0.75rem;
+    }
+
+    .menu__item .arrow {
+      border-left: .25rem solid transparent;
+      border-right: .25rem solid transparent;
+      border-top: .25rem solid var(--color-white);
+    }
+  }
+
+  &--hide {
+    box-shadow: none;
+    transform: translateY(-100%);
+  }
+
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5.5rem;
+  }
+
+  @include tablets {
+    &__wrap {
+      height: 4.5rem;
+    }
+
+    &__menu {
+      transform: translateX(100%);
+      transition: transform $slowdown, background-color $slowdown;
+
+      &.show {
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
+.is-modal-open .header {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}

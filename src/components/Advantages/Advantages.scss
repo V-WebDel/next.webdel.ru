@@ -1,0 +1,104 @@
+@use "../../styles/globals" as *;
+
+.advantages {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    @include lst;
+    margin-bottom: 1.25rem;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 18rem;
+    margin: 2rem 2rem 0;
+    padding: 2.5rem 1.25rem;
+    opacity: 0;
+    border-radius: var(--radius-small);
+    transform: translateY(4rem);
+    transition: box-shadow $middledown;
+
+    &:hover {
+      box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.1);
+
+      .advantages__icon {
+        svg, img {
+          transform: scale(1.4);
+        }
+      }
+    }
+  }
+
+  &__icon {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 2rem;
+
+    svg {
+      fill: var(--color-default);
+      width: 100%;
+      height: 100%;
+      transition: transform $slowdown;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      transition: transform $slowdown;
+    }
+  }
+
+  &__content {
+    text-align: center;
+  }
+
+  &__title {
+    margin-bottom: 0.5rem;
+    font: var(--font-heading-3);
+    letter-spacing: 1px;
+  }
+
+  &__text {
+    margin-bottom: 0;
+    font: var(--font-medium-italic);
+  }
+
+  @include laptop {
+    &__item {
+      margin: 2rem 1.25rem 0;
+    }
+  }
+
+  @include tablets {
+    &__list {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__item {
+      margin: 0;
+    }
+  }
+
+  @include phones {
+    &__item {
+      width: 17.5rem;
+      padding: 2.5rem 1rem 2rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .advantages__item {
+    opacity: 1;
+    transform: none;
+    transition: box-shadow $middledown;
+  }
+}

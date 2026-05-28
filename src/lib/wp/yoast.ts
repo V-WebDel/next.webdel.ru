@@ -1,4 +1,6 @@
-export function extractYoastMeta(yoast?: any) {
+import type { WPYoastHead } from "./types";
+
+export function extractYoastMeta(yoast?: WPYoastHead) {
   if (!yoast) return {};
   return {
     title: yoast.title as string | undefined,

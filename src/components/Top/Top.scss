@@ -1,0 +1,54 @@
+@use "../../styles/globals" as *;
+
+.top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  &__wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    letter-spacing: 3px;
+    color: var(--color-white);
+    text-align: center;
+  }
+
+  &__hello {
+    margin-bottom: 0.5rem;
+    font: var(--font-heading-3);
+  }
+
+  &__profession {
+    position: relative;
+    margin-bottom: 0.5rem;
+    font: var(--font-heading-mega);
+    font-variant-ligatures: none;
+    
+    .typeline {
+      position: relative;
+      margin-right: 0.25rem;
+      white-space: nowrap;
+    }
+  }
+
+  &__text {
+    font: var(--font-title);
+  }
+
+
+  @include tablets {
+    &__wrap {
+      letter-spacing: 2px;
+    }
+
+    &__hello {
+      margin-bottom: 1rem;
+    }
+
+    &__profession {
+      margin-bottom: 1rem;
+    }
+  }
+}

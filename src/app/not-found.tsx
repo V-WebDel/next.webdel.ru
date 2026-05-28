@@ -5,10 +5,10 @@ import Elements from "@/components/Elements/Elements";
 export default function NotFoundPage() {
   return (
     <Layout>
-      <div className="inner inner--top inner--full">
+      <main className="inner inner--top inner--full">
         <NotFound />
         <Elements />
-      </div>
+      </main>
     </Layout>
   );
 }
