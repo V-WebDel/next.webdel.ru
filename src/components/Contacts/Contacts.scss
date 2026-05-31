@@ -1,0 +1,149 @@
+@use "../../styles/globals" as *;
+
+.contacts {
+  padding: 6rem 0;
+
+  &__wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  &__block {
+    width: 50%;
+
+    &--list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &--form {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        height: 70%;
+        width: 2px;
+        background-color: rgba($default, 0.5);
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  &__title {
+    margin-bottom: 2.5rem;
+    font: var(--font-heading-3);
+    text-align: center;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include lst;
+  }
+
+  &__item {
+    position: relative;
+    padding-left: 50px;
+    font: var(--font-mega);
+    letter-spacing: 1px;
+
+    &--phone {
+      &:hover {
+        svg {
+          animation-name: phone-ring;
+          animation-duration: 0.8s;
+          animation-iteration-count: 3;
+          animation-timing-function: ease;
+          animation-fill-mode: both;
+        }
+      }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 40px;
+    }
+  }
+
+  &__svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-right: 0.25rem;
+    fill: var(--color-default);
+  }
+
+  &__link {
+    color: var(--color-default);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-default-hover);
+      text-decoration: none;
+    }
+  }
+
+  @include laptop {
+    &__item {
+      padding-left: 2.5rem;
+
+      &:not(:last-child) {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  @include tablets {
+    &__wrap {
+      flex-direction: column;
+      margin-top: 0;
+    }
+
+    &__block {
+      width: 100%;
+      margin-top: 2rem;
+
+      &_form {
+        &::before {
+          display: none;
+        }
+      }
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__item {
+      padding-left: 2rem;
+      font: var(--font-big);
+
+      &:not(:last-child) {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    &__svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  @include phones {
+    padding: 2.5rem 0;
+
+    &__item {
+      &:not(:last-child) {
+        margin-bottom: 1.25rem;
+      }
+    }
+  }
+}

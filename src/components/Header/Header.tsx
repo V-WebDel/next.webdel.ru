@@ -159,7 +159,7 @@ export default function Header() {
               </li>
 
               <li className="menu__item">
-                <Link href="/contact" className="menu__link" onClick={closeMenu}>
+                <Link href="/contacts" className="menu__link" onClick={closeMenu}>
                   <svg className="menu__svg menu__svg--contacts" aria-hidden="true">
                     <use href="/sprite.svg#contact" />
                   </svg>

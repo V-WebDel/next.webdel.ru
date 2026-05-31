@@ -30,6 +30,31 @@
   }
 }
 
+/* Inner page top area */
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: 90px;
+
+  &--top {
+    background-color: var(--color-default);
+  }
+
+  &--full {
+    min-height: 100vh;
+  }
+
+  @include tablets {
+    padding-top: 70px;
+
+    &--full {
+      padding-bottom: 40px;
+    }
+  }
+}
+
 
 /* Section */
 .section {

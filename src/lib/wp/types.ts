@@ -67,6 +67,22 @@ export type WPHomeAcf = {
   };
 };
 
+export type WPContactsAcf = {
+  contacts?: {
+    title?: string;
+    show?: boolean;
+    "subtitle-contacts"?: string;
+    "subtitle-form"?: string;
+    items?: Array<{
+      type?: "phone" | "email" | "telegram" | string;
+      "number-link"?: string;
+      "number-phone"?: string;
+      email?: string;
+      telegram?: string;
+    }>;
+  };
+};
+
 export type WPPortfolio = {
   id: number;
   slug: string;
@@ -85,11 +101,11 @@ export type WPPortfolio = {
   yoast_head_json?: WPYoastHead;
 };
 
-export type WPPage = {
+export type WPPage<TAcf = WPHomeAcf> = {
   id: number;
   slug: string;
   title: { rendered: string };
   content?: { rendered: string };
-  acf?: WPHomeAcf;
+  acf?: TAcf;
   yoast_head_json?: WPYoastHead;
 };
