@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const yoast = extractYoastMeta(page.yoast_head_json);
 
   return {
-    title: yoast.title ?? "Contacts - WebDel",
+    title: yoast.title ?? "Контактная информация - WebDel",
     description: yoast.description,
     alternates: yoast.canonical ? { canonical: yoast.canonical } : undefined,
     openGraph: yoast.og
@@ -42,6 +42,7 @@ export default async function ContactsPage() {
       {contacts?.show !== false ? (
         <Contacts
           title={contacts?.title}
+          uptitleContacts={contacts?.["title"]}
           subtitleContacts={contacts?.["subtitle-contacts"]}
           subtitleForm={contacts?.["subtitle-form"]}
           items={contacts?.items?.map((item) => ({

@@ -11,6 +11,7 @@ export type ContactItem = {
 type Props = {
   title?: string;
   subtitleContacts?: string;
+  uptitleContacts?: string;
   subtitleForm?: string;
   items?: ContactItem[];
 };
@@ -55,8 +56,9 @@ function getContactLink(item: ContactItem) {
 }
 
 export default function Contacts({
-  title = "Contacts",
+  title = "Контакты",
   subtitleContacts,
+  uptitleContacts,
   items = [],
 }: Props) {
   const contactItems = items
@@ -71,11 +73,14 @@ export default function Contacts({
     <section className="section contacts">
       <div className="container">
         <h1 className="visually-hidden">{title}</h1>
-        {subtitleContacts ? (
-          <p className="title-text">{subtitleContacts}</p>
+        {uptitleContacts ? (
+          <p className="title-text">{uptitleContacts}</p>
         ) : null}
         <div className="contacts__wrap">
           <address className="contacts__block contacts__block--list">
+            {subtitleContacts ? (
+              <h2 className="contacts__title">{subtitleContacts}</h2>
+            ) : null}
             {contactItems.length ? (
               <ul className="contacts__list">
                 {contactItems.map((item, index) => {
