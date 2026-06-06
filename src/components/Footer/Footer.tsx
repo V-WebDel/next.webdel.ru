@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import "./Footer.scss";
-
 type FooterMessenger = {
   type?: string;
   telegram?: string;

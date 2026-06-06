@@ -2,9 +2,12 @@
 
 .error {
   display: flex;
+  align-items: center;
   justify-content: center;
+  flex: 1;
   text-align: center;
   width: 100vw;
+  min-height: 100%;
   overflow: hidden;
   background-color: var(--color-default);
   color: var(--color-white);

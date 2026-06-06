@@ -30,6 +30,11 @@
   }
 }
 
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Inner page top area */
 .inner {
   position: relative;
@@ -44,6 +49,10 @@
 
   &--full {
     min-height: 100vh;
+  }
+
+  &--not-found {
+    flex: 1;
   }
 
   @include tablets {
