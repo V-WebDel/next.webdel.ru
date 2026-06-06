@@ -1,0 +1,185 @@
+@use "../../styles/globals" as *;
+
+.experience {
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.5rem;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-blue);
+    }
+  }
+
+  &__block {
+    padding-top: 2rem;
+
+    &--main {
+      width: 35%;
+      padding-right: 2rem;
+      border-right: 1px solid var(--color-blue);
+    }
+
+    &--duties {
+      width: 65%;
+      padding-left: 2rem;
+    }
+  }
+
+  &__company {
+    margin-bottom: 1.25rem;
+    font: var(--font-name);
+  }
+
+  &__post {
+    margin-bottom: 1.5rem;
+    font: var(--font-title);
+    font-style: italic;
+  }
+
+  &__time {
+    font: var(--font-small-bold);
+  }
+
+  &__content {
+    margin-bottom: 2rem;
+    font: var(--font-big);
+
+    p {
+      margin-bottom: 2rem;
+    }
+
+    ul {
+      @include lst;
+      margin-bottom: 2rem;
+  
+      li {
+        position: relative;
+        padding-left: 1.25rem;
+  
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+  
+        &::before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 0.5rem;
+          height: 0.5rem;
+          background-color: var(--color-default);
+          border-radius: 50%;
+          transform: translateY(-50%)
+        }
+      }
+    }
+  }
+
+  &__links {
+    @include lst;
+    margin-bottom: 2rem;
+
+    &-item {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      a {
+        font: var(--font-heading-3);
+        color: var(--color-accent);
+
+        &:hover, &:focus {
+          color: var(--color-accent-hover);
+        }
+      }
+    }
+  }
+
+  @include laptop {
+
+    &__block {
+      padding-top: 1.5rem;
+
+      &--main {
+        width: 40%;
+        padding-right: 1.5rem;
+        border-right: none;
+      }
+  
+      &--duties {
+        width: 60%;
+        padding-left: 1.5rem;
+      }
+    }
+
+  
+    &__company {
+      margin-bottom: 1rem;
+    }
+  
+    &__post {
+      margin-bottom: 1rem;
+    }
+  
+    &__content, &__links {
+      margin-bottom: 1rem;
+    }
+  }
+
+  @include tablets {
+    &__wrap {
+      margin-top: 1.5rem;
+    }
+
+    &__row {
+      &:not(:last-child) {
+        border-bottom: none;
+      }
+    }
+
+    &__block {
+      padding-top: 1.5rem;
+
+      &--main {
+        width: 100%;
+        padding-right: 0;
+      }
+  
+      &--duties {
+        width: 100%;
+        padding-left: 0;
+      }
+    }
+
+    &__content {
+      p {
+        margin-bottom: 1rem;
+      } 
+
+      ul {
+        margin-bottom: 1rem;
+        
+        li {
+          &:not(:last-child) {
+            margin-bottom: 0.5rem;
+          }
+        }
+      }
+    }
+
+    &__links {
+      &-item {
+        &:not(:last-child) {
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+}

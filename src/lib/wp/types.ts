@@ -83,6 +83,42 @@ export type WPContactsAcf = {
   };
 };
 
+export type WPResumeAcf = {
+  resume?: {
+    information?: {
+      subtitle?: string;
+      show?: boolean;
+      foto?: number;
+      text?: string;
+    };
+    skills?: {
+      subtitle?: string;
+      show?: boolean;
+      text?: string;
+    };
+    tools?: {
+      subtitle?: string;
+      show?: boolean;
+      text?: string;
+    };
+  };
+  experience?: {
+    title?: string;
+    show?: boolean;
+    items?: Array<{
+      company?: string;
+      post?: string;
+      start?: string;
+      finish?: string;
+      description?: string;
+      projects?: Array<{
+        link?: string;
+        name?: string;
+      }> | null;
+    }>;
+  };
+};
+
 export type WPPortfolio = {
   id: number;
   slug: string;

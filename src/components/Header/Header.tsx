@@ -132,7 +132,7 @@ export default function Header() {
           >
             <ul className="menu__list">
               <li className="menu__item">
-                <Link href="/rezume" className="menu__link" onClick={closeMenu}>
+                <Link href="/resume" className="menu__link" onClick={closeMenu}>
                   <svg className="menu__svg menu__svg--business" aria-hidden="true">
                     <use href="/sprite.svg#business" />
                   </svg>
