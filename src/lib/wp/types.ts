@@ -121,10 +121,13 @@ export type WPResumeAcf = {
 
 export type WPPortfolio = {
   id: number;
+  date?: string;
   slug: string;
   link: string;
   title: { rendered: string };
   featured_media?: number;
+  url_sites?: number[];
+  class_list?: string[];
   acf?: {
     in_top?: boolean;
     project?: {
@@ -135,6 +138,14 @@ export type WPPortfolio = {
     };
   };
   yoast_head_json?: WPYoastHead;
+};
+
+export type WPTerm = {
+  id: number;
+  count?: number;
+  name: string;
+  slug: string;
+  taxonomy?: string;
 };
 
 export type WPPage<TAcf = WPHomeAcf> = {
