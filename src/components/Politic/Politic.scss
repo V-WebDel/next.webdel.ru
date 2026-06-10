@@ -1,0 +1,64 @@
+@use "../../styles/globals" as *;
+
+.politic {
+
+  &__wrap {
+    margin-top: 2.5rem;
+  }
+
+  p {
+    font: var(--font-big)
+  }
+
+  ol {
+    @include lst;
+    counter-reset: li;
+    font: var(--font-heading-3);
+    text-align: center;
+
+    li {
+      margin-bottom: 1.5rem;
+
+      &::before {
+        counter-increment: li; 
+	      content: counters(li,".") ". ";
+      }
+
+      ol {
+        margin-top: 0.5rem;
+        font: var(--font-big);
+        text-align: left;
+
+        li {
+          margin-bottom: 0.5rem;
+
+          ol {
+            font-weight: 400;
+          }
+        }
+      }
+
+      ul {
+        @include lst;
+        margin-top: 0.5rem;
+        font-weight: 400;
+
+        li {
+          position: relative;
+          padding-left: 2rem;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            width: 5px;
+            height: 5px;
+            background-color: var(--color-default);
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}

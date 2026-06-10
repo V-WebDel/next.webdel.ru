@@ -85,6 +85,15 @@ export default function Footer({ logotype, copyright, messengers }: Props) {
               &copy; {year} {copyright || logoName}
             </span>
           </div>
+          
+          <div className="footer__area footer__area_links">
+            <Link className="footer__link" href="/politica">
+              Политика конфиденциальности
+            </Link>
+            <Link className="footer__link" href="/personal">
+              Согласие на обработку персональных данных
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
