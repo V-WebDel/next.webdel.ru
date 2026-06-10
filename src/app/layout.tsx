@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/index.scss";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 export const metadata: Metadata = {
   icons: {

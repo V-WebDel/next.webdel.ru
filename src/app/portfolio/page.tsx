@@ -78,7 +78,7 @@ export default async function PortfolioPage() {
     return {
       id: item.id,
       title: item.title.rendered,
-      href: item.link,
+      href: `/portfolio/${item.slug}`,
       date: item.date,
       termIds: item.url_sites ?? [],
       imageJpg: `/images/portfolio/${imageBase}.jpg`,

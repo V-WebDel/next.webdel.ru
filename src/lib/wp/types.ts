@@ -125,12 +125,18 @@ export type WPPortfolio = {
   slug: string;
   link: string;
   title: { rendered: string };
+  content?: { rendered: string };
   featured_media?: number;
   url_sites?: number[];
   class_list?: string[];
   acf?: {
     in_top?: boolean;
     project?: {
+      work?: string;
+      variant?: boolean;
+      description?: string;
+      link?: string;
+      text_link?: string;
       group?: {
         mobile?: number;
         desktop?: number;
