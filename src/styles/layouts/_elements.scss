@@ -74,6 +74,15 @@
   white-space: nowrap;
 }
 
+.heading {
+  padding: 4rem 0;
+
+  &__title {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+
 
 /* Logotype */
 .logo {

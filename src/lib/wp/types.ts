@@ -5,6 +5,7 @@ export type WPYoastHead = {
   og_title?: string;
   og_description?: string;
   og_image?: Array<{ url?: string }>;
+  twitter_misc?: Record<string, string>;
 };
 
 export type WPImageMedia = {
@@ -142,6 +143,23 @@ export type WPPortfolio = {
         desktop?: number;
       };
     };
+  };
+  yoast_head_json?: WPYoastHead;
+};
+
+export type WPPost = {
+  id: number;
+  date?: string;
+  slug: string;
+  link: string;
+  title: { rendered: string };
+  content?: { rendered: string };
+  excerpt?: { rendered: string };
+  featured_media?: number;
+  categories?: number[];
+  acf?: {
+    reading_time?: string;
+    views?: number;
   };
   yoast_head_json?: WPYoastHead;
 };

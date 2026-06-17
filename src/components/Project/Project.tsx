@@ -59,7 +59,6 @@ export default function Project({
   link,
   linkText,
   linkDescription,
-  variant,
   desktopImage,
   mobileImage,
 }: Props) {
