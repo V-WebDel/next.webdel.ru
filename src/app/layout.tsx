@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ConsentCookies from "@/components/ConsentCookies/ConsentCookies";
 import "@/styles/index.scss";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -13,7 +14,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <body>
+        {children}
+        <ConsentCookies />
+      </body>
     </html>
   );
 }
