@@ -385,63 +385,6 @@
   }
 }
 
-.btn-up {
-  position: fixed;
-  bottom: 2.5rem;
-  left: 2.5rem;
-  z-index: -1;
-  width: 3rem;
-  height: 3rem;
-  padding: 0;
-  box-sizing: border-box;
-  background: none;
-  border: none;
-  opacity: 0;
-  cursor: pointer;
-
-  svg {
-    width: 100%;
-    height: 100%;
-    fill: $accent;
-    transition: $slowdown;
-  }
-
-  &.btn-up--show {
-    z-index: 100;
-    opacity: 1;
-    animation-name: jump-btn;
-    animation-duration: 2s;
-    animation-delay: 1s;
-    animation-iteration-count: infinite;
-    animation-play-state: running;
-    animation-fill-mode: backwards;
-    animation-timing-function: easy;
-  }
-
-  &.btn-up--top {
-    animation-name: hide-btn;
-    animation-play-state: running;
-    animation-iteration-count: infinite;
-
-    svg {
-      transform: scaleY(1) scaleX(1); 
-    }
-  }
-
-  &:hover, &:focus {
-    animation-play-state: paused;
-    
-    svg {
-      fill: var(--color-white);
-      transform: scale(1.2);
-    }
-  }
-
-  @include phones {
-    bottom: 1.5rem;
-    left: 1.5rem;
-  }
-}
 
 /* Scrollbar styles */
 .scrollbar {

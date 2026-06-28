@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ButtonUp from "../ButtonUp/ButtonUp";
 
 type FooterMessenger = {
   type?: string;
@@ -47,55 +48,58 @@ export default function Footer({ logotype, copyright, messengers }: Props) {
   const logoText = logotype?.text || "Создание сайтов";
 
   return (
-    <footer className="footer">
-      <div className="container">
-        <div className="footer__wrap">
-          <div className="footer__area footer__area_logo">
-            <div className="logo footer__logo">
-              <Link href="/" className="logo__link">
-                <span className="logo__name">{logoName}</span>
-                <span className="logo__description">{logoText}</span>
+    <>
+      <footer className="footer">
+        <div className="container">
+          <div className="footer__wrap">
+            <div className="footer__area footer__area_logo">
+              <div className="logo footer__logo">
+                <Link href="/" className="logo__link">
+                  <span className="logo__name">{logoName}</span>
+                  <span className="logo__description">{logoText}</span>
+                </Link>
+              </div>
+            </div>
+
+            {socialLinks.length > 0 ? (
+              <div className="footer__area footer__area_social social">
+                <ul className="social__list">
+                  {socialLinks.map(({ type, url, icon, label }) => (
+                    <li className="social__item" key={type}>
+                      <a
+                        href={url}
+                        aria-label={label}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <svg aria-hidden="true">
+                          <use href={`/sprite.svg#${icon}`} />
+                        </svg>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            <div className="footer__area footer__area_copyright">
+              <span className="footer__copyright">
+                &copy; {year} {copyright || logoName}
+              </span>
+            </div>
+
+            <div className="footer__area footer__area_links">
+              <Link className="footer__link" href="/politica">
+              Политика конфиденциальности
+              </Link>
+              <Link className="footer__link" href="/personal">
+              Согласие на обработку персональных данных
               </Link>
             </div>
           </div>
-
-          {socialLinks.length > 0 ? (
-            <div className="footer__area footer__area_social social">
-              <ul className="social__list">
-                {socialLinks.map(({ type, url, icon, label }) => (
-                  <li className="social__item" key={type}>
-                    <a
-                      href={url}
-                      aria-label={label}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <svg aria-hidden="true">
-                        <use href={`/sprite.svg#${icon}`} />
-                      </svg>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-
-          <div className="footer__area footer__area_copyright">
-            <span className="footer__copyright">
-              &copy; {year} {copyright || logoName}
-            </span>
-          </div>
-          
-          <div className="footer__area footer__area_links">
-            <Link className="footer__link" href="/politica">
-              Политика конфиденциальности
-            </Link>
-            <Link className="footer__link" href="/personal">
-              Согласие на обработку персональных данных
-            </Link>
-          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+      <ButtonUp />
+    </>
   );
 }
