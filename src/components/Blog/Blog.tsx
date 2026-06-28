@@ -7,6 +7,7 @@ export type BlogItem = {
   title?: string;
   href?: string;
   image?: string;
+  imageWebp?: string;
   imageAlt?: string;
   readingTime?: string;
   date?: string;
@@ -41,12 +42,17 @@ export default function Blog({
             <li className="blog-list__item blog-item" key={item.id}>
               <Link className="blog-item__link" href={item.href || "/"}>
                 <div className="blog-item__image">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={item.image || "/images/articles/default.png"}
-                    alt={item.imageAlt || "image"}
-                    loading="lazy"
-                  />
+                  <picture>
+                    {item.imageWebp ? (
+                      <source srcSet={item.imageWebp} type="image/webp" />
+                    ) : null}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.image || "/images/articles/default.png"}
+                      alt={item.imageAlt || "image"}
+                      loading="lazy"
+                    />
+                  </picture>
                 </div>
 
                 <div className="blog-item__content">

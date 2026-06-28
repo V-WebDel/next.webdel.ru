@@ -1,3 +1,6 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
 import type { Metadata } from "next";
 import Blog from "@/components/Blog/Blog";
 import Infographic from "@/components/Infographic/Infographic";
@@ -9,6 +12,7 @@ import type { WPHomeAcf, WPPage, WPPost } from "@/lib/wp/types";
 export const revalidate = 60;
 
 const POSTS_PER_PAGE = 8;
+const ARTICLE_IMAGES_DIR = join(process.cwd(), "public", "images", "articles");
 
 type PageProps = {
   searchParams?: Promise<{ page?: string }>;
@@ -60,15 +64,29 @@ function getReadingTime(post: WPPost) {
   return readingTime.includes("чтен") ? readingTime : `${readingTime} чтения`;
 }
 
+function getArticleWebpPath(imageBase: string) {
+  const webpPath = `/images/articles/${imageBase}.webp`;
+
+  return existsSync(join(ARTICLE_IMAGES_DIR, `${imageBase}.webp`)) ? webpPath : undefined;
+}
+
 function getLocalArticleImage(post: WPPost) {
   const imageUrl = post.yoast_head_json?.og_image?.[0]?.url;
   const filename = imageUrl?.split("/").pop();
 
-  if (!filename) return "/images/articles/default.png";
+  if (!filename) {
+    return {
+      png: "/images/articles/default.png",
+      webp: getArticleWebpPath("default"),
+    };
+  }
 
   const imageBase = filename.replace(/\.[a-z0-9]+$/i, "");
 
-  return `/images/articles/${imageBase}.png`;
+  return {
+    png: `/images/articles/${imageBase}.png`,
+    webp: getArticleWebpPath(imageBase),
+  };
 }
 
 function getPageHref(page: number) {
@@ -132,15 +150,20 @@ export default async function BlogPage({ searchParams }: PageProps) {
   ]);
   const infographic = homePage?.acf?.infographic;
 
-  const items = posts.map((post) => ({
-    id: post.id,
-    title: post.title.rendered,
-    href: `/blog/${post.slug}`,
-    image: getLocalArticleImage(post),
-    imageAlt: post.title.rendered,
-    readingTime: getReadingTime(post),
-    date: getFormattedDate(post.date),
-  }));
+  const items = posts.map((post) => {
+    const image = getLocalArticleImage(post);
+
+    return {
+      id: post.id,
+      title: post.title.rendered,
+      href: `/blog/${post.slug}`,
+      image: image.png,
+      imageWebp: image.webp,
+      imageAlt: post.title.rendered,
+      readingTime: getReadingTime(post),
+      date: getFormattedDate(post.date),
+    };
+  });
 
   return (
     <main>

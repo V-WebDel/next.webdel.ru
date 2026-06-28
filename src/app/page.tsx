@@ -92,9 +92,9 @@ export default async function Home() {
     return {
       id: item.id,
       title: item.title.rendered,
-      href: item.link,
+      href: `/portfolio/${item.slug}`,
       imageJpg: `/images/portfolio/${imageBase}.jpg`,
-      imageWebp: `/images/webp/portfolio/${imageBase}.webp`,
+      imageWebp: `/images/portfolio/${imageBase}.webp`,
       imageAlt: item.title.rendered,
     };
   });

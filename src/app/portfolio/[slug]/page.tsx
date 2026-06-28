@@ -54,7 +54,7 @@ function getLocalImage(media?: WPImageMedia) {
 
   return {
     src: `/images/portfolio/${filename}`,
-    webp: `/images/webp/portfolio/${base}.webp`,
+    webp: `/images/portfolio/${base}.webp`,
     alt: media?.alt_text || "Скрин сайта",
   };
 }
@@ -100,7 +100,7 @@ function getSimilarItems(
         title: item.title.rendered,
         href: `/portfolio/${item.slug}`,
         imageJpg: `/images/portfolio/${imageBase}.jpg`,
-        imageWebp: `/images/webp/portfolio/${imageBase}.webp`,
+        imageWebp: `/images/portfolio/${imageBase}.webp`,
         imageAlt: item.title.rendered,
       };
     });

@@ -82,7 +82,7 @@ export default async function PortfolioPage() {
       date: item.date,
       termIds: item.url_sites ?? [],
       imageJpg: `/images/portfolio/${imageBase}.jpg`,
-      imageWebp: `/images/webp/portfolio/${imageBase}.webp`,
+      imageWebp: `/images/portfolio/${imageBase}.webp`,
       imageAlt: item.title.rendered,
     };
   });
