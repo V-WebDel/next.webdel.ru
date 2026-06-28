@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout/Layout";
+import Layout from "@/components/layout/Layout";
 import NotFound from "@/components/NotFound/NotFound";
 import Elements from "@/components/Elements/Elements";
 import Infographic from "@/components/Infographic/Infographic";

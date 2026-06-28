@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Layout from "@/components/Layout/Layout";
+import Layout from "@/components/layout/Layout";
 import Elements from "@/components/Elements/Elements";
 import Top from "@/components/Top/Top";
 import Advantages from "@/components/Advantages/Advantages";
