@@ -11,6 +11,7 @@ import type { WPImageMedia, WPPage, WPPortfolio } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";
 
 export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 async function getHomePage() {
   const pages = await wpFetch<WPPage[]>("/wp-json/wp/v2/pages?slug=home");

@@ -4,7 +4,8 @@ import Article from "@/components/Article/Article";
 import Infographic from "@/components/Infographic/Infographic";
 
 import { wpFetch } from "@/lib/wp/api";
-import type { WPHomeAcf, WPPage, WPPost, WPTerm } from "@/lib/wp/types";
+import { getHomeAcfSafe } from "@/lib/wp/home";
+import type { WPPost, WPTerm } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";
 
 export const revalidate = 60;
@@ -25,14 +26,6 @@ async function getPost(slug: string) {
 
 async function getCategories() {
   return wpFetch<WPTerm[]>("/wp-json/wp/v2/categories?per_page=100");
-}
-
-async function getHomePage() {
-  const pages = await wpFetch<WPPage<WPHomeAcf>[]>(
-    "/wp-json/wp/v2/pages?slug=home"
-  );
-
-  return pages[0];
 }
 
 function getFormattedDate(date?: string) {
@@ -123,9 +116,7 @@ function getPostCategories(post: WPPost, categories: WPTerm[]) {
 }
 
 export async function generateStaticParams() {
-  const posts = await getPosts();
-
-  return posts.map((post) => ({ slug: post.slug }));
+  return [];
 }
 
 export async function generateMetadata({
@@ -158,14 +149,14 @@ export default async function BlogPostPage({ params }: PageProps) {
     getPost(slug),
     getPosts(),
     getCategories(),
-    getHomePage(),
+    getHomeAcfSafe(),
   ]);
 
   if (!post) {
     notFound();
   }
 
-  const infographic = homePage?.acf?.infographic;
+  const infographic = homePage?.infographic;
   const { previousPost, nextPost } = getNeighborPosts(post, posts);
 
   return (

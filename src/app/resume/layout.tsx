@@ -2,23 +2,16 @@ import type { ReactNode } from "react";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
-import { wpFetch } from "@/lib/wp/api";
-import type { WPHomeAcf, WPPage } from "@/lib/wp/types";
+import { getHomeAcfSafe } from "@/lib/wp/home";
 
-async function getFooterData() {
-  const pages = await wpFetch<WPPage<WPHomeAcf>[]>(
-    "/wp-json/wp/v2/pages?slug=home"
-  );
-
-  return pages[0]?.acf;
-}
+export const dynamic = "force-dynamic";
 
 export default async function ContactsLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const footer = await getFooterData();
+  const footer = await getHomeAcfSafe();
 
   return (
     <div className="wrapper">

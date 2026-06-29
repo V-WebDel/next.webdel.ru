@@ -5,7 +5,8 @@ import Infographic from "@/components/Infographic/Infographic";
 import Portfolio from "@/components/Portfolio/Portfolio";
 
 import { wpFetch } from "@/lib/wp/api";
-import type { WPHomeAcf, WPPage, WPPortfolio, WPTerm } from "@/lib/wp/types";
+import { getHomeAcfSafe } from "@/lib/wp/home";
+import type { WPPortfolio, WPTerm } from "@/lib/wp/types";
 
 export const revalidate = 60;
 
@@ -25,14 +26,6 @@ async function getPortfolioTerms() {
   return wpFetch<WPTerm[]>("/wp-json/wp/v2/url_sites?per_page=100");
 }
 
-async function getHomePage() {
-  const pages = await wpFetch<WPPage<WPHomeAcf>[]>(
-    "/wp-json/wp/v2/pages?slug=home"
-  );
-
-  return pages[0];
-}
-
 function getLocalPortfolioImageBase(item: WPPortfolio) {
   const imageUrl = item.yoast_head_json?.og_image?.[0]?.url;
   const filename = imageUrl?.split("/").pop();
@@ -50,9 +43,9 @@ export default async function PortfolioPage() {
   const [portfolioItems, terms, homePage] = await Promise.all([
     getPortfolioItems(),
     getPortfolioTerms(),
-    getHomePage(),
+    getHomeAcfSafe(),
   ]);
-  const infographic = homePage?.acf?.infographic;
+  const infographic = homePage?.infographic;
 
   const preparedTerms = terms
     .filter((term) => term.count !== 0)

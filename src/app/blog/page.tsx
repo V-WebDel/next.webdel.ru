@@ -7,7 +7,8 @@ import Infographic from "@/components/Infographic/Infographic";
 
 import { wpFetch } from "@/lib/wp/api";
 import { WP_BASE_URL } from "@/lib/wp/config";
-import type { WPHomeAcf, WPPage, WPPost } from "@/lib/wp/types";
+import { getHomeAcfSafe } from "@/lib/wp/home";
+import type { WPPost } from "@/lib/wp/types";
 
 export const revalidate = 60;
 
@@ -34,14 +35,6 @@ async function getPosts(page: number) {
     items: (await res.json()) as WPPost[],
     totalPages: Number(res.headers.get("X-WP-TotalPages") || 1),
   };
-}
-
-async function getHomePage() {
-  const pages = await wpFetch<WPPage<WPHomeAcf>[]>(
-    "/wp-json/wp/v2/pages?slug=home"
-  );
-
-  return pages[0];
 }
 
 function getFormattedDate(date?: string) {
@@ -146,9 +139,9 @@ export default async function BlogPage({ searchParams }: PageProps) {
   const currentPage = Math.max(1, Number(resolvedSearchParams?.page || 1) || 1);
   const [{ items: posts, totalPages }, homePage] = await Promise.all([
     getPosts(currentPage),
-    getHomePage(),
+    getHomeAcfSafe(),
   ]);
-  const infographic = homePage?.acf?.infographic;
+  const infographic = homePage?.infographic;
 
   const items = posts.map((post) => {
     const image = getLocalArticleImage(post);

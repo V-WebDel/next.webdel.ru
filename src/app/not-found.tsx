@@ -2,19 +2,10 @@ import Layout from "@/components/layout/Layout";
 import NotFound from "@/components/NotFound/NotFound";
 import Elements from "@/components/Elements/Elements";
 import Infographic from "@/components/Infographic/Infographic";
-import { wpFetch } from "@/lib/wp/api";
-import type { WPHomeAcf, WPPage } from "@/lib/wp/types";
-
-async function getFooterData() {
-  const pages = await wpFetch<WPPage<WPHomeAcf>[]>(
-    "/wp-json/wp/v2/pages?slug=home"
-  );
-
-  return pages[0]?.acf;
-}
+import { getHomeAcfSafe } from "@/lib/wp/home";
 
 export default async function NotFoundPage() {
-  const footer = await getFooterData();
+  const footer = await getHomeAcfSafe();
 
   return (
     <Layout

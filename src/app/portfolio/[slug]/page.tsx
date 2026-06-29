@@ -6,7 +6,8 @@ import Project from "@/components/Project/Project";
 import Similar from "@/components/Similar/Similar";
 
 import { wpFetch } from "@/lib/wp/api";
-import type { WPHomeAcf, WPImageMedia, WPPage, WPPortfolio, WPTerm } from "@/lib/wp/types";
+import { getHomeAcfSafe } from "@/lib/wp/home";
+import type { WPImageMedia, WPPortfolio, WPTerm } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";
 
 export const revalidate = 60;
@@ -35,14 +36,6 @@ async function getMedia(id?: number) {
   if (!id) return undefined;
 
   return wpFetch<WPImageMedia>(`/wp-json/wp/v2/media/${id}`);
-}
-
-async function getHomePage() {
-  const pages = await wpFetch<WPPage<WPHomeAcf>[]>(
-    "/wp-json/wp/v2/pages?slug=home"
-  );
-
-  return pages[0];
 }
 
 function getLocalImage(media?: WPImageMedia) {
@@ -107,9 +100,7 @@ function getSimilarItems(
 }
 
 export async function generateStaticParams() {
-  const items = await getPortfolioItems();
-
-  return items.map((item) => ({ slug: item.slug }));
+  return [];
 }
 
 export async function generateMetadata({
@@ -153,9 +144,9 @@ export default async function PortfolioProjectPage({ params }: PageProps) {
   const [mobileMedia, desktopMedia, homePage] = await Promise.all([
     getMedia(project?.group?.mobile),
     getMedia(project?.group?.desktop),
-    getHomePage(),
+    getHomeAcfSafe(),
   ]);
-  const infographic = homePage?.acf?.infographic;
+  const infographic = homePage?.infographic;
 
   return (
     <main>
