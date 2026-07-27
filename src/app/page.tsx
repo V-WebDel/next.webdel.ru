@@ -23,24 +23,43 @@ async function getHomePage() {
   return pages[0];
 }
 
+async function getHomePageSafe() {
+  try {
+    return await getHomePage();
+  } catch (error) {
+    console.warn("Failed to fetch WordPress home page data", error);
+    return undefined;
+  }
+}
+
 async function getMediaByIds(ids: number[]) {
   const uniqueIds = [...new Set(ids)].filter(Boolean);
 
   if (!uniqueIds.length) return new Map<number, WPImageMedia>();
 
-  const media = await wpFetch<WPImageMedia[]>(
-    `/wp-json/wp/v2/media?include=${uniqueIds.join(",")}&per_page=${uniqueIds.length}`
-  );
+  try {
+    const media = await wpFetch<WPImageMedia[]>(
+      `/wp-json/wp/v2/media?include=${uniqueIds.join(",")}&per_page=${uniqueIds.length}`
+    );
 
-  return new Map(media.map((item) => [item.id, item]));
+    return new Map(media.map((item) => [item.id, item]));
+  } catch (error) {
+    console.warn("Failed to fetch WordPress media data", error);
+    return new Map<number, WPImageMedia>();
+  }
 }
 
 async function getTopPortfolio() {
-  const portfolio = await wpFetch<WPPortfolio[]>(
-    "/wp-json/wp/v2/portfolio?per_page=100"
-  );
+  try {
+    const portfolio = await wpFetch<WPPortfolio[]>(
+      "/wp-json/wp/v2/portfolio?per_page=100"
+    );
 
-  return portfolio.filter((item) => item.acf?.in_top === true);
+    return portfolio.filter((item) => item.acf?.in_top === true);
+  } catch (error) {
+    console.warn("Failed to fetch WordPress top portfolio data", error);
+    return [];
+  }
 }
 
 function getLocalPortfolioImageBase(item: WPPortfolio) {
@@ -51,7 +70,7 @@ function getLocalPortfolioImageBase(item: WPPortfolio) {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getHomePage();
+  const page = await getHomePageSafe();
   const yoast = extractYoastMeta(page?.yoast_head_json);
 
   return {
@@ -69,8 +88,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const page = await getHomePage();
-  const acf = page.acf;
+  const page = await getHomePageSafe();
+  const acf = page?.acf;
   const portfolioItems = await getTopPortfolio();
   const advantageItems = acf?.advantages?.items ?? [];
   const mediaById = await getMediaByIds(

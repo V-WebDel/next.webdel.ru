@@ -8,6 +8,10 @@ function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function getResponsePreview(text: string) {
+  return text.replace(/\s+/g, " ").trim().slice(0, 120);
+}
+
 export async function wpFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const url = `${WP_BASE_URL}${path}`;
   let res: Response | undefined;
@@ -32,5 +36,21 @@ export async function wpFetch<T>(path: string, init?: RequestInit): Promise<T> {
     throw new Error(`WP fetch error ${res?.status ?? "unknown"}: ${url}`);
   }
 
-  return res.json() as Promise<T>;
+  const text = await res.text();
+  const contentType = res.headers.get("content-type") || "unknown";
+
+  if (!text) {
+    throw new Error(`WP fetch returned empty response: ${url}`);
+  }
+
+  try {
+    return JSON.parse(text) as T;
+  } catch (error) {
+    const preview = getResponsePreview(text);
+
+    throw new Error(
+      `WP fetch returned invalid JSON (${contentType}) from ${url}: ${preview}`,
+      { cause: error }
+    );
+  }
 }
