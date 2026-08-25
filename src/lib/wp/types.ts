@@ -10,8 +10,10 @@ export type WPYoastHead = {
 
 export type WPImageMedia = {
   id: number;
+  slug?: string;
   source_url?: string;
   alt_text?: string;
+  mime_type?: string;
 };
 
 export type WPHomeAcf = {

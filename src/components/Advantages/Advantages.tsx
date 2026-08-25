@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -10,6 +9,7 @@ import "./Advantages.scss";
 gsap.registerPlugin(ScrollTrigger);
 
 type AdvantageItem = {
+  icon?: string;
   imageUrl?: string;
   name?: string;
   text?: string;
@@ -89,14 +89,13 @@ export default function Advantages({ title, items }: Props) {
           {advantages.map((item, index) => (
             <li className="advantages__item" key={item.name || index}>
               <div className="advantages__icon">
-                {item.imageUrl ? (
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.name || ""}
-                    fill
-                    sizes="48px"
-                    unoptimized
-                  />
+                {item.icon ? (
+                  <svg aria-hidden="true">
+                    <use href={`/sprite.svg#${item.icon}`} />
+                  </svg>
+                ) : item.imageUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={item.imageUrl} alt={item.name || ""} loading="lazy" />
                 ) : (
                   <svg aria-hidden="true">
                     <use href="/sprite.svg#check" />

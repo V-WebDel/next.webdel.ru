@@ -69,6 +69,15 @@ function getLocalPortfolioImageBase(item: WPPortfolio) {
   return filename?.replace(/\.[a-z0-9]+$/i, "") || item.slug;
 }
 
+function getSpriteIconFromMedia(media?: WPImageMedia) {
+  if (!media) return undefined;
+
+  const filename = media.source_url?.split("/").pop();
+  const fileBase = filename?.replace(/\.[a-z0-9]+$/i, "");
+
+  return media.slug || fileBase;
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomePageSafe();
   const yoast = extractYoastMeta(page?.yoast_head_json);
@@ -103,6 +112,7 @@ export default async function Home() {
     return {
       name: item.name,
       text: item.text,
+      icon: getSpriteIconFromMedia(media),
       imageUrl: media?.source_url,
     };
   });
