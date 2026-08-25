@@ -21,20 +21,52 @@ type PageProps = {
 
 async function getPosts(page: number) {
   const path = `/wp-json/wp/v2/posts?per_page=${POSTS_PER_PAGE}&page=${page}`;
-  const res = await fetch(`${WP_BASE_URL}${path}`, {
+  const url = `${WP_BASE_URL}${path}`;
+  const res = await fetch(url, {
+    cache: "no-store",
     headers: {
-      "Content-Type": "application/json",
+      Accept: "application/json",
+      "User-Agent": "WebDel-Next-Vercel/1.0",
     },
+    redirect: "follow",
   });
+  const contentType = res.headers.get("content-type");
+  const text = await res.text();
+
+  console.log("WP POSTS REQUEST URL:", url);
+  console.log("WP POSTS RESPONSE URL:", res.url);
+  console.log("WP POSTS STATUS:", res.status);
+  console.log("WP POSTS CONTENT TYPE:", contentType);
+  console.log("WP POSTS RESPONSE:", text.slice(0, 1000));
 
   if (!res.ok) {
-    throw new Error(`WP fetch error ${res.status}: ${WP_BASE_URL}${path}`);
+    throw new Error(`WP fetch error ${res.status}: ${url}`);
   }
 
   return {
-    items: (await res.json()) as WPPost[],
+    items: JSON.parse(text) as WPPost[],
     totalPages: Number(res.headers.get("X-WP-TotalPages") || 1),
   };
+}
+
+async function logHomeWpResponse() {
+  const url = `${process.env.NEXT_PUBLIC_WP_BASE_URL || WP_BASE_URL}/wp-json/wp/v2/pages?slug=home`;
+  const response = await fetch(url, {
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "WebDel-Next-Vercel/1.0",
+    },
+    redirect: "follow",
+  });
+  const contentType = response.headers.get("content-type");
+  const text = await response.text();
+
+  console.log("WP REQUEST URL:", url);
+  console.log("WP RESPONSE URL:", response.url);
+  console.log("WP STATUS:", response.status);
+  console.log("WP CONTENT TYPE:", contentType);
+  console.log("WP RESPONSE:", text.slice(0, 1000));
 }
 
 function getFormattedDate(date?: string) {
@@ -137,6 +169,7 @@ export const metadata: Metadata = {
 export default async function BlogPage({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
   const currentPage = Math.max(1, Number(resolvedSearchParams?.page || 1) || 1);
+  await logHomeWpResponse();
   const [{ items: posts, totalPages }, homePage] = await Promise.all([
     getPosts(currentPage),
     getHomeAcfSafe(),
