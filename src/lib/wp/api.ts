@@ -20,7 +20,8 @@ export async function wpFetch<T>(path: string, init?: RequestInit): Promise<T> {
     res = await fetch(url, {
       ...init,
       headers: {
-        "Content-Type": "application/json",
+        Accept: "application/json",
+        "User-Agent": "WebDel Next.js WordPress client",
         ...(init?.headers || {}),
       },
     });

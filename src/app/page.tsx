@@ -9,6 +9,7 @@ import HomeDebugLog from "@/components/HomeDebugLog/HomeDebugLog";
 
 import { wpFetch } from "@/lib/wp/api";
 import { WP_BASE_URL, WP_BASE_URL_SOURCE } from "@/lib/wp/config";
+import { getErrorDetails } from "@/lib/wp/errors";
 import type { WPImageMedia, WPPage, WPPortfolio } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";
 
@@ -36,7 +37,7 @@ async function getHomePageResult() {
     return { data: await getHomePage() };
   } catch (error) {
     console.warn("Failed to fetch WordPress home page data", error);
-    return { data: undefined, error: getErrorMessage(error) };
+    return { data: undefined, error: getErrorDetails(error) };
   }
 }
 
@@ -55,7 +56,7 @@ async function getMediaByIdsResult(ids: number[]) {
     console.warn("Failed to fetch WordPress media data", error);
     return {
       data: new Map<number, WPImageMedia>(),
-      error: getErrorMessage(error),
+      error: getErrorDetails(error),
     };
   }
 }
@@ -69,12 +70,8 @@ async function getTopPortfolioResult() {
     return { data: portfolio.filter((item) => item.acf?.in_top === true) };
   } catch (error) {
     console.warn("Failed to fetch WordPress top portfolio data", error);
-    return { data: [], error: getErrorMessage(error) };
+    return { data: [], error: getErrorDetails(error) };
   }
-}
-
-function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : String(error);
 }
 
 function getLocalPortfolioImageBase(item: WPPortfolio) {

@@ -48,6 +48,17 @@ export default function HomeDebugLog({ data }: Props) {
     }
 
     console.groupEnd();
+
+    fetch("/api/wp-debug", { cache: "no-store" })
+      .then((response) => response.json())
+      .then((debugData) => {
+        console.group("[WebDel] WordPress API debug route");
+        console.log(debugData);
+        console.groupEnd();
+      })
+      .catch((error) => {
+        console.warn("[WebDel] WordPress API debug route failed", error);
+      });
   }, [data]);
 
   return null;
