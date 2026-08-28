@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 import Blog from "@/components/Blog/Blog";
 import Infographic from "@/components/Infographic/Infographic";
 
-import { wpFetch } from "@/lib/wp/api";
 import { WP_BASE_URL } from "@/lib/wp/config";
 import { getHomeAcfSafe } from "@/lib/wp/home";
 import type { WPPost } from "@/lib/wp/types";

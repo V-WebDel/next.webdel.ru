@@ -46,7 +46,6 @@ export default function Blog({
                     {item.imageWebp ? (
                       <source srcSet={item.imageWebp} type="image/webp" />
                     ) : null}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.image || "/images/articles/default.png"}
                       alt={item.imageAlt || "image"}
