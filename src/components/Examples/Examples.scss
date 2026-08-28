@@ -83,6 +83,7 @@
 
   .swiper-slide {
     height: auto;
+    aspect-ratio: 6 / 9;
   }
 
   @include laptop {
