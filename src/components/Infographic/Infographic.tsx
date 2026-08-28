@@ -16,24 +16,24 @@ type InfographicItem = {
 
 const fallbackItems: InfographicItem[] = [
   {
-    icon: "webpages",
-    title: "5+",
-    text: "лет опыта в разработке сайтов",
+    icon: "goal",
+    title: "+5 лет",
+    text: "опыта в веб-разработке",
   },
   {
-    icon: "tools",
-    title: "CMS",
-    text: "WordPress и удобная админ-панель",
+    icon: "profits",
+    title: "больше 150",
+    text: "сайтов создано",
   },
   {
-    icon: "check",
-    title: "100%",
-    text: "адаптивная верстка под устройства",
+    icon: "project",
+    title: "за 5 дней",
+    text: "создаю лендинг",
   },
   {
-    icon: "time",
-    title: "SEO",
-    text: "базовая подготовка к продвижению",
+    icon: "cogwheel",
+    title: "за 1-3 дня",
+    text: "подключаю верстку к CMS Wordpress",
   },
 ];
 
