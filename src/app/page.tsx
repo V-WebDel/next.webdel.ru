@@ -5,10 +5,8 @@ import Top from "@/components/Top/Top";
 import Advantages from "@/components/Advantages/Advantages";
 import Examples from "@/components/Examples/Examples";
 import Infographic from "@/components/Infographic/Infographic";
-import HomeDebugLog from "@/components/HomeDebugLog/HomeDebugLog";
 
 import { wpFetch } from "@/lib/wp/api";
-import { WP_BASE_URL, WP_BASE_URL_SOURCE } from "@/lib/wp/config";
 import type { WPImageMedia, WPPage, WPPortfolio } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";
 
@@ -26,55 +24,42 @@ async function getHomePage() {
 }
 
 async function getHomePageSafe() {
-  const result = await getHomePageResult();
-
-  return result.data;
-}
-
-async function getHomePageResult() {
   try {
-    return { data: await getHomePage() };
+    return await getHomePage();
   } catch (error) {
     console.warn("Failed to fetch WordPress home page data", error);
-    return { data: undefined, error: getErrorMessage(error) };
+    return undefined;
   }
 }
 
-async function getMediaByIdsResult(ids: number[]) {
+async function getMediaByIds(ids: number[]) {
   const uniqueIds = [...new Set(ids)].filter(Boolean);
 
-  if (!uniqueIds.length) return { data: new Map<number, WPImageMedia>() };
+  if (!uniqueIds.length) return new Map<number, WPImageMedia>();
 
   try {
     const media = await wpFetch<WPImageMedia[]>(
       `/wp-json/wp/v2/media?include=${uniqueIds.join(",")}&per_page=${uniqueIds.length}`
     );
 
-    return { data: new Map(media.map((item) => [item.id, item])) };
+    return new Map(media.map((item) => [item.id, item]));
   } catch (error) {
     console.warn("Failed to fetch WordPress media data", error);
-    return {
-      data: new Map<number, WPImageMedia>(),
-      error: getErrorMessage(error),
-    };
+    return new Map<number, WPImageMedia>();
   }
 }
 
-async function getTopPortfolioResult() {
+async function getTopPortfolio() {
   try {
     const portfolio = await wpFetch<WPPortfolio[]>(
       "/wp-json/wp/v2/portfolio?per_page=100"
     );
 
-    return { data: portfolio.filter((item) => item.acf?.in_top === true) };
+    return portfolio.filter((item) => item.acf?.in_top === true);
   } catch (error) {
     console.warn("Failed to fetch WordPress top portfolio data", error);
-    return { data: [], error: getErrorMessage(error) };
+    return [];
   }
-}
-
-function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : String(error);
 }
 
 function getLocalPortfolioImageBase(item: WPPortfolio) {
@@ -112,18 +97,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const homeResult = await getHomePageResult();
-  const page = homeResult.data;
+  const page = await getHomePageSafe();
   const acf = page?.acf;
-  const portfolioResult = await getTopPortfolioResult();
-  const portfolioItems = portfolioResult.data;
+  const portfolioItems = await getTopPortfolio();
   const advantageItems = acf?.advantages?.items ?? [];
-  const mediaResult = await getMediaByIdsResult(
+  const mediaById = await getMediaByIds(
     advantageItems
       .map((item) => item.image)
       .filter((id): id is number => typeof id === "number")
   );
-  const mediaById = mediaResult.data;
   const advantages = advantageItems.map((item) => {
     const media = item.image ? mediaById.get(item.image) : undefined;
 
@@ -155,29 +137,6 @@ export default async function Home() {
         messengers_footer: acf?.messengers_footer,
       }}
     >
-      <HomeDebugLog
-        data={{
-          wpBaseUrl: WP_BASE_URL,
-          wpBaseUrlSource: WP_BASE_URL_SOURCE,
-          homePageLoaded: Boolean(page),
-          usedHomeFallback: !page,
-          usedPortfolioFallback: Boolean(portfolioResult.error),
-          usedMediaFallback: Boolean(mediaResult.error),
-          counts: {
-            advantagesFromWp: advantageItems.length,
-            advantagesRendered: advantages.length,
-            infographicFromWp: acf?.infographic?.items?.length ?? 0,
-            examplesRendered: examples.length,
-            portfolioTopFromWp: portfolioItems.length,
-            mediaLoaded: mediaById.size,
-          },
-          errors: {
-            homePage: homeResult.error,
-            portfolio: portfolioResult.error,
-            media: mediaResult.error,
-          },
-        }}
-      />
       <main>
         <div className="inner inner--top inner--full">
           <Top
