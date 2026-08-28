@@ -20,20 +20,30 @@ type PageProps = {
 
 async function getPosts(page: number) {
   const path = `/wp-json/wp/v2/posts?per_page=${POSTS_PER_PAGE}&page=${page}`;
-  const res = await fetch(`${WP_BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
 
-  if (!res.ok) {
-    throw new Error(`WP fetch error ${res.status}: ${WP_BASE_URL}${path}`);
+  try {
+    const res = await fetch(`${WP_BASE_URL}${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error(`WP fetch error ${res.status}: ${WP_BASE_URL}${path}`);
+    }
+
+    return {
+      items: (await res.json()) as WPPost[],
+      totalPages: Number(res.headers.get("X-WP-TotalPages") || 1),
+    };
+  } catch (error) {
+    console.warn("Failed to fetch WordPress posts", error);
+
+    return {
+      items: [],
+      totalPages: 1,
+    };
   }
-
-  return {
-    items: (await res.json()) as WPPost[],
-    totalPages: Number(res.headers.get("X-WP-TotalPages") || 1),
-  };
 }
 
 function getFormattedDate(date?: string) {

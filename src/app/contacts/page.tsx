@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Contacts from "@/components/Contacts/Contacts";
 
-import { wpFetch } from "@/lib/wp/api";
+import { wpFetchSafe } from "@/lib/wp/api";
 import type { WPContactsAcf, WPPage } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";
 
@@ -10,14 +11,16 @@ const CONTACTS_PAGE_ID = 13;
 export const revalidate = 60;
 
 async function getContactsPage() {
-  return wpFetch<WPPage<WPContactsAcf>>(
-    `/wp-json/wp/v2/pages/${CONTACTS_PAGE_ID}`
+  return wpFetchSafe<WPPage<WPContactsAcf> | undefined>(
+    `/wp-json/wp/v2/pages/${CONTACTS_PAGE_ID}`,
+    undefined,
+    "contacts page"
   );
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getContactsPage();
-  const yoast = extractYoastMeta(page.yoast_head_json);
+  const yoast = extractYoastMeta(page?.yoast_head_json);
 
   return {
     title: yoast.title ?? "Контактная информация - WebDel",
@@ -35,6 +38,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ContactsPage() {
   const page = await getContactsPage();
+  if (!page) {
+    notFound();
+  }
+
   const contacts = page.acf?.contacts;
 
   return (

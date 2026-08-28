@@ -4,7 +4,7 @@ import Header from "@/components/Header/Header";
 import Infographic from "@/components/Infographic/Infographic";
 import Portfolio from "@/components/Portfolio/Portfolio";
 
-import { wpFetch } from "@/lib/wp/api";
+import { wpFetchSafe } from "@/lib/wp/api";
 import { getHomeAcfSafe } from "@/lib/wp/home";
 import type { WPPortfolio, WPTerm } from "@/lib/wp/types";
 
@@ -19,11 +19,19 @@ const TERM_LABELS: Record<string, string> = {
 };
 
 async function getPortfolioItems() {
-  return wpFetch<WPPortfolio[]>("/wp-json/wp/v2/portfolio?per_page=100");
+  return wpFetchSafe<WPPortfolio[]>(
+    "/wp-json/wp/v2/portfolio?per_page=100",
+    [],
+    "portfolio items"
+  );
 }
 
 async function getPortfolioTerms() {
-  return wpFetch<WPTerm[]>("/wp-json/wp/v2/url_sites?per_page=100");
+  return wpFetchSafe<WPTerm[]>(
+    "/wp-json/wp/v2/url_sites?per_page=100",
+    [],
+    "portfolio terms"
+  );
 }
 
 function getLocalPortfolioImageBase(item: WPPortfolio) {

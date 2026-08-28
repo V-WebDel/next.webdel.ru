@@ -1,4 +1,4 @@
-import { wpFetch } from "@/lib/wp/api";
+import { wpFetchSafe } from "@/lib/wp/api";
 import type { WPPage } from "@/lib/wp/types";
 
 export const POLICY_PAGE_IDS = {
@@ -7,5 +7,9 @@ export const POLICY_PAGE_IDS = {
 } as const;
 
 export async function getPolicyPage(id: number) {
-  return wpFetch<WPPage<unknown>>(`/wp-json/wp/v2/pages/${id}`);
+  return wpFetchSafe<WPPage<unknown> | undefined>(
+    `/wp-json/wp/v2/pages/${id}`,
+    undefined,
+    "policy page"
+  );
 }

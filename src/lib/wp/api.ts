@@ -54,3 +54,17 @@ export async function wpFetch<T>(path: string, init?: RequestInit): Promise<T> {
     );
   }
 }
+
+export async function wpFetchSafe<T>(
+  path: string,
+  fallback: T,
+  context: string,
+  init?: RequestInit
+): Promise<T> {
+  try {
+    return await wpFetch<T>(path, init);
+  } catch (error) {
+    console.warn(`Failed to fetch WordPress ${context}`, error);
+    return fallback;
+  }
+}

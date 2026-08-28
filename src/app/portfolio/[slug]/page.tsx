@@ -5,7 +5,7 @@ import Infographic from "@/components/Infographic/Infographic";
 import Project from "@/components/Project/Project";
 import Similar from "@/components/Similar/Similar";
 
-import { wpFetch } from "@/lib/wp/api";
+import { wpFetchSafe } from "@/lib/wp/api";
 import { getHomeAcfSafe } from "@/lib/wp/home";
 import type { WPImageMedia, WPPortfolio, WPTerm } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";
@@ -17,16 +17,26 @@ type PageProps = {
 };
 
 async function getPortfolioItems() {
-  return wpFetch<WPPortfolio[]>("/wp-json/wp/v2/portfolio?per_page=100");
+  return wpFetchSafe<WPPortfolio[]>(
+    "/wp-json/wp/v2/portfolio?per_page=100",
+    [],
+    "portfolio items"
+  );
 }
 
 async function getPortfolioTerms() {
-  return wpFetch<WPTerm[]>("/wp-json/wp/v2/url_sites?per_page=100");
+  return wpFetchSafe<WPTerm[]>(
+    "/wp-json/wp/v2/url_sites?per_page=100",
+    [],
+    "portfolio terms"
+  );
 }
 
 async function getPortfolioItem(slug: string) {
-  const items = await wpFetch<WPPortfolio[]>(
-    `/wp-json/wp/v2/portfolio?slug=${slug}`
+  const items = await wpFetchSafe<WPPortfolio[]>(
+    `/wp-json/wp/v2/portfolio?slug=${slug}`,
+    [],
+    "portfolio item"
   );
 
   return items[0];
@@ -35,7 +45,11 @@ async function getPortfolioItem(slug: string) {
 async function getMedia(id?: number) {
   if (!id) return undefined;
 
-  return wpFetch<WPImageMedia>(`/wp-json/wp/v2/media/${id}`);
+  return wpFetchSafe<WPImageMedia | undefined>(
+    `/wp-json/wp/v2/media/${id}`,
+    undefined,
+    "portfolio media"
+  );
 }
 
 function getLocalImage(media?: WPImageMedia) {

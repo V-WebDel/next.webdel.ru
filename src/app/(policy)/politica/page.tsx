@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Politic from "@/components/Politic/Politic";
 
 import { extractYoastMeta } from "@/lib/wp/yoast";
@@ -8,10 +9,10 @@ export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPolicyPage(POLICY_PAGE_IDS.politica);
-  const yoast = extractYoastMeta(page.yoast_head_json);
+  const yoast = extractYoastMeta(page?.yoast_head_json);
 
   return {
-    title: yoast.title ?? page.title.rendered,
+    title: yoast.title ?? page?.title.rendered ?? "WebDel",
     description: yoast.description,
     alternates: yoast.canonical ? { canonical: yoast.canonical } : undefined,
     openGraph: yoast.og
@@ -26,6 +27,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function PoliticaPage() {
   const page = await getPolicyPage(POLICY_PAGE_IDS.politica);
+  if (!page) {
+    notFound();
+  }
 
   return (
     <main>

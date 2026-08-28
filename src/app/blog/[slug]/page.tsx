@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Article from "@/components/Article/Article";
 import Infographic from "@/components/Infographic/Infographic";
 
-import { wpFetch } from "@/lib/wp/api";
+import { wpFetchSafe } from "@/lib/wp/api";
 import { getHomeAcfSafe } from "@/lib/wp/home";
 import type { WPPost, WPTerm } from "@/lib/wp/types";
 import { extractYoastMeta } from "@/lib/wp/yoast";
@@ -15,17 +15,29 @@ type PageProps = {
 };
 
 async function getPosts() {
-  return wpFetch<WPPost[]>("/wp-json/wp/v2/posts?per_page=100");
+  return wpFetchSafe<WPPost[]>(
+    "/wp-json/wp/v2/posts?per_page=100",
+    [],
+    "posts"
+  );
 }
 
 async function getPost(slug: string) {
-  const posts = await wpFetch<WPPost[]>(`/wp-json/wp/v2/posts?slug=${slug}`);
+  const posts = await wpFetchSafe<WPPost[]>(
+    `/wp-json/wp/v2/posts?slug=${slug}`,
+    [],
+    "post"
+  );
 
   return posts[0];
 }
 
 async function getCategories() {
-  return wpFetch<WPTerm[]>("/wp-json/wp/v2/categories?per_page=100");
+  return wpFetchSafe<WPTerm[]>(
+    "/wp-json/wp/v2/categories?per_page=100",
+    [],
+    "categories"
+  );
 }
 
 function getFormattedDate(date?: string) {
